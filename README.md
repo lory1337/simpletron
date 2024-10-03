@@ -10,5 +10,5 @@ Simpletron Machine textbook implementation from "C How to Program (Deitel)"
 2. Type the sentinel number to end the code loading and start execution
 
 ## Screenshots
-![screenshot missing](screenshot.jpg)
-![screenshot2 missing](screenshot2.jpg)
+![screenshot missing](screenshot.png)
+![screenshot2 missing](screenshot2.png)
