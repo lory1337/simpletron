@@ -83,37 +83,101 @@ void execute(int memory[], int *accumulatorPtr, int *instructionCounterPtr, int 
     *operandPtr = *instructionRegisterPtr % 100;
     switch(*operationCodePtr){
       case READ:{
-        //not implemented yet
+        int inValue;
+        printf("? ");
+        scanf("%d", &inValue);
+        while(inValue>MAXWORDVALUE || inValue<MINWORDVALUE){ //constraints check
+          printf("? ");
+          scanf("%d", &inValue);
+        }
+        memory[*operandPtr] = inValue;
+        ++(*instructionCounterPtr);
+        tempInstructionCounter = (* instructionCounterPtr);
         break;
       }case WRITE:{
-        //not implemented yet
+        printf("*** %d ***\n", memory[*operandPtr]);
+        ++(*instructionCounterPtr);
+        tempInstructionCounter = (* instructionCounterPtr);
         break;
       }case LOAD:{
-        //not implemented yet
+        *accumulatorPtr = memory[*operandPtr];
+        ++(*instructionCounterPtr);
+        tempInstructionCounter = (* instructionCounterPtr);
         break;
       }case STORE:{
-        //not implemented yet
+        memory[*operandPtr] = *accumulatorPtr;
+        ++(*instructionCounterPtr);
+        tempInstructionCounter = (* instructionCounterPtr);
         break;
       }case ADD:{
-        //not implemented yet
+        *accumulatorPtr += memory[*operandPtr];
+        if(*accumulatorPtr>MAXWORDVALUE || *accumulatorPtr <MINWORDVALUE){ //constraints check
+          printf("*** Accumulator overflow ***\n");
+          printf("*** Simpletron execution abnormally terminated ***\n");
+          tempInstructionCounter = *instructionCounterPtr;
+          *instructionCounterPtr = MEMORYSIZE;
+        }else{
+          ++(*instructionCounterPtr);
+          tempInstructionCounter = (* instructionCounterPtr);
+        }
         break;
       }case SUBTRACT:{
-        //not implemented yet
+        *accumulatorPtr -= memory[*operandPtr];
+        if(*accumulatorPtr>MAXWORDVALUE || *accumulatorPtr <MINWORDVALUE){ //constraints check
+          printf("*** Accumulator overflow ***\n");
+          printf("*** Simpletron execution abnormally terminated ***\n");
+          tempInstructionCounter = *instructionCounterPtr;
+          *instructionCounterPtr = MEMORYSIZE;
+        }else{
+          ++(*instructionCounterPtr);
+          tempInstructionCounter = (* instructionCounterPtr);
+        }
         break;
       }case DIVIDE:{
-        //not implemented yet
+        if(memory[*operandPtr]==0){ //constraints check
+          printf("*** Attempt to divide by zero ***\n");
+          printf("*** Simpletron execution abnormally terminated ***\n");
+          tempInstructionCounter = *instructionCounterPtr;
+          *instructionCounterPtr = MEMORYSIZE;
+        }else{
+          *accumulatorPtr /= memory[*operandPtr];
+          ++(*instructionCounterPtr);
+          tempInstructionCounter = (* instructionCounterPtr);
+        }
         break;
       }case MULTIPLY:{
-        //not implemented yet
+        *accumulatorPtr *= memory[*operandPtr];
+        if(*accumulatorPtr>MAXWORDVALUE || *accumulatorPtr <MINWORDVALUE){ //constraints check
+          printf("*** Accumulator overflow ***\n");
+          printf("*** Simpletron execution abnormally terminated ***\n");
+          tempInstructionCounter = *instructionCounterPtr;
+          *instructionCounterPtr = MEMORYSIZE;
+        }else{
+          ++(*instructionCounterPtr);
+          tempInstructionCounter = (* instructionCounterPtr);
+        }
         break;
       }case BRANCH:{
-        //not implemented yet
+        *instructionCounterPtr = *operandPtr;
+        tempInstructionCounter = *instructionCounterPtr;
         break;
       }case BRANCHNEG:{
-        //not implemented yet
+        if(*accumulatorPtr < 0){
+          *instructionCounterPtr = *operandPtr;
+          tempInstructionCounter = *instructionCounterPtr;
+        }else{
+          ++(*instructionCounterPtr);
+          tempInstructionCounter = (* instructionCounterPtr);
+        }
         break;
       }case BRANCHZERO:{
-        //not implemented yet
+        if(*accumulatorPtr == 0){
+          *instructionCounterPtr = *operandPtr;
+          tempInstructionCounter = *instructionCounterPtr;
+        }else{
+          ++(*instructionCounterPtr);
+          tempInstructionCounter = (* instructionCounterPtr);
+        }
         break;
       }case HALT:{
         printf("*** Simpletron execution terminated ***\n");
@@ -121,14 +185,14 @@ void execute(int memory[], int *accumulatorPtr, int *instructionCounterPtr, int 
         *instructionCounterPtr = MEMORYSIZE;
         break;
       }default:{
-        printf("*** ERROR: invalid opcode! ***\n");
+        printf("*** Invalid operand code ***\n");
         tempInstructionCounter = *instructionCounterPtr;
         *instructionCounterPtr = MEMORYSIZE;
         break;
       }
     }
   }
-  *instructionCounterPtr = tempInstructionCounter;
+  *instructionCounterPtr = tempInstructionCounter; //restore the last instruction executed
 }
 
 void dump(int memory[], int *accumulatorPtr, int *instructionCounterPtr, int *instructionRegisterPtr, int *operationCodePtr, int *operandPtr){ //dump memory and registers
