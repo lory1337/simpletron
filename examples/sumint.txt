@@ -1,0 +1,24 @@
+//read and sum integers until sentinel(0) is typed
+
+1009
+2009
+4206
+3008
+2108
+4000
+1108
+4300
+0000
+0000
+
+//pseudo assembler
+READ 9
+LOAD 9
+BRANCHZERO 6
+ADD 8
+STORE 8
+BRANCH 00
+WRITE 8
+HALT
+0 //sum
+0 //read number
