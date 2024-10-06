@@ -1,0 +1,19 @@
+//prints average givent seven integers
+
+//pseudoassembler
+90: 0007 counter
+91: 0007 copycounter
+92: 0000 sum
+93: 0000 read integer
+94: 0001 decrement
+
+load 90
+branchzero average
+read 93
+load 93
+add 92
+store 92
+load 90
+sub 94
+store 90
+branch 0000

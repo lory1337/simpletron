@@ -1,0 +1,23 @@
+//reads y integers and give the max (y is given by first integer)
+
+
+//pseudoassembler
+90: 0000 first integer
+91: 0000 read integer
+92: 0000 max integer
+93: 0001 decrement
+read 90
+read 92
+load 90 //loop
+sub 93
+store 90
+read 91
+load 91
+sub 92
+branchneg loop
+add 92
+store 92
+load 90
+branchzero halt
+branch loop
+halt
