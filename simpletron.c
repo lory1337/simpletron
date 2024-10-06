@@ -87,7 +87,7 @@ void execute(int memory[], int *accumulatorPtr, int *instructionCounterPtr, int 
         printf("? ");
         scanf("%d", &inValue);
         while(inValue>MAXWORDVALUE || inValue<MINWORDVALUE){ //constraints check
-          printf("? ");
+          printf("(value out of range)? ");
           scanf("%d", &inValue);
         }
         memory[*operandPtr] = inValue;
@@ -191,8 +191,11 @@ void execute(int memory[], int *accumulatorPtr, int *instructionCounterPtr, int 
         break;
       }
     }
+    *instructionRegisterPtr = memory[*instructionCounterPtr]; //next instruction
+    //printf("debug: next instruction %d\n", (*instructionCounterPtr)); //debug
   }
   *instructionCounterPtr = tempInstructionCounter; //restore the last instruction executed
+  //printf("debug: next instruction %d\n", (*instructionCounterPtr)); //debug
 }
 
 void dump(int memory[], int *accumulatorPtr, int *instructionCounterPtr, int *instructionRegisterPtr, int *operationCodePtr, int *operandPtr){ //dump memory and registers
